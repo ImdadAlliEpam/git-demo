@@ -1,0 +1,243 @@
+======================
+LMM(Lock Modify Merge)
+======================
+=> This Lock-Modify-Merge strategy ensures that only one person can work on a specific resource at a time so it prevent concurrent modification which may occur by the other developers.
+
+   Lock :- When a developer wants to work on a specific file or section of code , then he need to accure a lock on that resource.
+	   It prevent other developers to make changes to the same resource on the same time.
+
+   Modify :- After accuring the lock The developer can modify the file.
+
+   Merge :- After successfull modification the developer can merge the code with main source code.
+
+
+Note:- But this strategy is time consuming , Branch-commit-Merge or Copy-Modify-Merge strategy overcome these problems.
+
+
+=======================
+CMM(Copy Modify Merge)
+=======================
+=>This Copy-Modify-Merge strategy promotes parallel development .
+
+  Copy :- Each developer keep copy of source code to develop independently without waiting for other
+
+  Modify :- Here developers can modify copy file that present with them.
+
+  Merge :- After development all can merge to main source code.
+	   During merging if any conflits occure then they need to resolve.
+
+
+
+
+
+
+git pull = git fetch + git merge
+
+git fetch => Don't add the remote changes to local file, to add we have to execute $ git merge.
+
+git pull => It is the combination of git fetch and git merge.
+
+
+===========
+git reset
+===========
+=> $ git reset --soft HEAD~1	=> This cmd undo the last commit and bring the files to staged area.
+
+=> $ git reset --mixed HEAD~1	=> This cmd undo the last commit and bring the files to unstaged area.
+
+=> $ git reset --hard HEAD~1	=> This cmd undo the last commit and delete the files
+
+
+===========
+git revert
+===========
+=> $ git revert <commit sha1> 	=> Here you can pass only 1st 5digits insted of whole sha1 of the commit
+
+Note:- After revert the perticular commit reverted in local repo, so to make changes in remote repo don't forget to push again
+	$ git push
+
+
+===========
+.gitignore
+===========
+.log => Now my .gitignore file add all the .log files. Means all the .log files will be ignored from the working directory.
+	do not track any .log file
+
+
+!error.log => Now git will ignore all the .log files except error.log file (git will keep track of error.log file).
+
+
+/TODO	=> Ignore Todo file in the current directory only, not in the subdirectory
+
+
+build/  => Ignore all the files of build directory
+
+
+doc/*.txt => Ignore only doc directory all .txt files but not in doc/subdirectories .txt files
+		ignore doc/notes.txt, but not doc/server/f1.txt
+
+
+doc/**/*.pdf  => ignore all .pdf files of the doc/ directory
+
+
+
+
+======
+merge
+======
+1. Fast forward merge
+=====================
+=> At the end Head will be point at the last commit of the feature branch
+
+2. Non fast forward
+====================
+=> At the end Head will be point at the newly created commit by the merging of the two branchs
+
+
+
+===============
+merge conflict
+===============
+=> When two developers or in two different branch modify the same file and same line of code, at that time merge conflicts occure.
+
+Note:- If two developers modify same file but different line of code, the merge conflicts will not occure.
+
+=> If conflicts occure then open the conflicted file, resolve the conflict the dont forget to add and commit.
+	st-1:- Resolve the conflict
+	st-2:- $ git add 
+	st-3:- $ git commit 
+
+
+we can also solve in multiple ways
+==================================
+
+1. git merge --abort	=>It will undo the merge
+
+2. git checkout --Xours --Xtheirs	=>It will keep our code as well as theirs code in the file
+
+3. git diff	=> Here you can see the difference, then solve manually
+
+4. git revert 09fe472	=> We can undo the merge
+
+=======
+Rebase
+=======
+=> Refer the screenshorts 
+
+=> As name says it rebase the commits.
+
+=> remember when we should not do rebase.
+
+
+====
+tag
+====
+=> It is used to highlight specific commit
+
+	$ git tag release1.0
+
+======
+Stash
+=====
+
+=> It will save the working directory changes temporarily.
+
+1. $ git stash save "message"	=> save the changes in stash and clean our working tree
+	or
+   $ git stash
+
+
+2. $ git stash list		=> It will display all the stash 
+
+
+3. $ git stash pop		=> remove from the stash
+	
+
+4. $ git stash apply <stash name>	=> Bring the stash back
+	$ git stash apply stash@{0}
+
+
+5. $ git stash drop 	=> clear the stash
+
+
+
+
+===========
+git remote
+===========
+
+=> we can copy the whole project using git remote 
+
+$ git remote -v		=> display the remote repo
+
+How to Add remote 
+------------------
+1. $ git remote add <name> <url>
+
+2. $ git remote add origin git@github.com:ImdadAlliEpam/git-demo-backup.git
+
+How to view remote
+------------------
+1. $ git remote -v
+
+2. $ git remote show <name>
+
+
+Q1 How to create a backup of the project ?
+===========================================
+st-1:-	$ git remote -v
+	$ git remote add origin <https/ssh link of the backup repo>	=> But here we will get error that origin is already exists
+
+st-2:- We have to remove the origin 1st
+	$ git remote remove origin
+
+st-3:- add new origin
+	$ git remote add origin <https/ssh link of the backup repo>
+
+st-4:- push to new origin
+		-here we will get one recomendation to use push, use that cmd to push
+
+
+
+Q2.What is the difference between git stash pop and git stash apply? Both will transfer the changes saved in stash back to the working directory, but what is the difference?
+===========================================================================================================================================================
+
+=> pop will delete the stash after returning the changes saved in it.
+
+=> apply dont delete the stash after returning the changes saved in it.
+
+
+
+
+
+
+
+
+
+
+
+gitk
+
+
+
+
+
+
+
+
+
+
+links
+------
+DevTestOps-Version_Control_with_Git.pdf
+
+https://git-scm.com/book/ru/v2
+
+
+
+
+
+
+
+
+
